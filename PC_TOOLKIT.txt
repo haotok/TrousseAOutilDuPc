@@ -1,0 +1,455 @@
+﻿##[Ps1 To Exe]
+##
+##Kd3HDZOFADWE8uK1
+##Nc3NCtDXThU=
+##Kd3HFJGZHWLWoLaVvnQnhQ==
+##LM/RF4eFHHGZ7/K1
+##K8rLFtDXTiW5
+##OsHQCZGeTiiZ4NI=
+##OcrLFtDXTiW5
+##LM/BD5WYTiiZ4tI=
+##McvWDJ+OTiiZ4tI=
+##OMvOC56PFnzN8u+Vs1Q=
+##M9jHFoeYB2Hc8u+Vs1Q=
+##PdrWFpmIG2HcofKIo2QX
+##OMfRFJyLFzWE8uK1
+##KsfMAp/KUzWJ0g==
+##OsfOAYaPHGbQvbyVvnQX
+##LNzNAIWJGmPcoKHc7Do3uAuO
+##LNzNAIWJGnvYv7eVvnQX
+##M9zLA5mED3nfu77Q7TV64AuzAgg=
+##NcDWAYKED3nfu77Q7TV64AuzAgg=
+##OMvRB4KDHmHQvbyVvnQX
+##P8HPFJGEFzWE8tI=
+##KNzDAJWHD2fS8u+Vgw==
+##P8HSHYKDCX3N8u+Vgw==
+##LNzLEpGeC3fMu77Ro2k3hQ==
+##L97HB5mLAnfMu77Ro2k3hQ==
+##P8HPCZWEGmaZ7/K1
+##L8/UAdDXTlaDjofG5iZk2XnrT2EXSsCIsqKo1L2I7eX5qDbcfZ8HXRpyjiyc
+##Kc/BRM3KXhU=
+##
+##
+##fd6a9f26a06ea3bc99616d4851b372ba
+
+# Check if the script is executed with administrator privileges
+if (-not ([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole] "Administrator")) {
+    # Restart the script as an administrator
+    Start-Process powershell.exe "-NoProfile -ExecutionPolicy Bypass -File $($PSCommandPath)" -Verb RunAs
+    exit
+}
+Add-Type -AssemblyName System.Windows.Forms
+Add-Type -AssemblyName System.Drawing
+
+$form = New-Object System.Windows.Forms.Form
+$form.Text = "PC TOOLKIT"
+$form.Width = 1000
+$form.Height = 650
+
+
+# EMPTY THE RECYCLE BIN OF THE PC
+
+$button = New-Object System.Windows.Forms.Button
+$button.Text = "EMPTY RECYCLE BIN"
+$button.Width = 100
+$button.Height = 50
+$button.Location = New-Object System.Drawing.Point(50,50)
+$button.ForeColor = [System.Drawing.Color]::Salmon
+$button.Add_Click({
+    
+    $result = [System.Windows.Forms.MessageBox]::Show("Do you want to continue?", "Title", [System.Windows.Forms.MessageBoxButtons]::YesNo)
+        if ($result -eq [System.Windows.Forms.DialogResult]::Yes) {
+            Import-Module Microsoft.PowerShell.Management
+            Clear-RecycleBin -Confirm:$false
+                } else { [System.Windows.Forms.MessageBox]::Show("It works!")
+                     break
+}
+
+})
+
+
+#Update the PC
+
+$windowsUpdate = New-Object System.Windows.Forms.Button
+$windowsUpdate.Text = "UPDATE THE PC"
+$windowsUpdate.Width = 100
+$windowsUpdate.Height = 50
+$windowsUpdate.Location = New-Object System.Drawing.Point(150,50)
+$windowsUpdate.ForeColor = [System.Drawing.Color]::Brown
+$windowsUpdate.Add_Click({
+    [System.Windows.Forms.MessageBox]::Show("Update in progress, check your powershell console to see the status. CLICK OK.")
+    Function Check-WindowsUpdate {
+    [CmdletBinding()]
+    param ()
+    $session = New-Object -ComObject Microsoft.Update.Session
+    $searcher = $session.CreateUpdateSearcher()
+    $searchResult = $searcher.Search("IsInstalled=0 and Type='Software'")
+    $updatesToDownload = New-Object -ComObject Microsoft.Update.UpdateColl
+    foreach ($update in $searchResult.Updates) {
+        $updatesToDownload.Add($update)
+    }
+    $downloader = $session.CreateUpdateDownloader()
+    $downloader.Updates = $updatesToDownload
+    $downloader.Download()
+    $updatesToInstall = New-Object -ComObject Microsoft.Update.UpdateColl
+    foreach ($update in $searchResult.Updates) {
+        $updatesToInstall.Add($update)
+    }
+    $installer = $session.CreateUpdateInstaller()
+    $installer.Updates = $updatesToInstall
+    $installationResult = $installer.Install()
+}
+Check-WindowsUpdate
+
+    $session = New-Object -ComObject Microsoft.Update.Session
+    $searcher = $session.CreateUpdateSearcher()
+    $searchResult = $searcher.Search("IsInstalled=0 and Type='Software'")
+
+    $updatesToDownload = New-Object -ComObject Microsoft.Update.UpdateColl
+
+    foreach ($update in $searchResult.Updates)
+    {
+        $updatesToDownload.Add($update)
+    }
+
+    if ($updatesToDownload.Count -eq 0)
+    {
+        Write-Host "No updates available."
+    }
+    else
+    {
+        $downloader = $session.CreateUpdateDownloader()
+        $downloader.Updates = $updatesToDownload
+        $downloader.Download()
+        $installer = $session.CreateUpdateInstaller()
+        $installer.Updates = $updatesToDownload
+        $result = $installer.Install()
+
+    Write-Host "Installation result: $result"
+    }
+    [System.Windows.Forms.MessageBox]::Show("The PC has been updated! But you might want to check Windows Update just in case.")
+})
+
+$windowsUpdate.Add_Click({control.exe /name Microsoft.WindowsUpdate})
+
+
+#LAUNCH CC CLEANER
+
+$launchButton = New-Object System.Windows.Forms.Button
+$launchButton.Text = "LAUNCH CC CLEANER"
+$launchButton.Width = 130
+$launchButton.Height = 70
+$launchButton.Location = New-Object System.Drawing.Point(380,50)
+$launchButton.ForeColor = [System.Drawing.Color]::Magenta
+$launchButton.Add_Click({
+    $result = [System.Windows.Forms.MessageBox]::Show("Do you want to continue?", "Title", [System.Windows.Forms.MessageBoxButtons]::YesNo)
+    if ($result -eq [System.Windows.Forms.DialogResult]::Yes) {
+        Start-Process -filepath "C:\Program Files\CCleaner\CCleaner64.exe"
+        [System.Windows.Forms.MessageBox]::Show("There you go!")
+    } else { 
+        [System.Windows.Forms.MessageBox]::Show("Got it!")
+        break
+    }
+})
+
+
+#Full system file check and repair
+
+$systemCheckButton = New-Object System.Windows.Forms.Button
+$systemCheckButton.Text = "LAUNCH FULL SYSTEM FILE CHECK AND REPAIR"
+$systemCheckButton.Width = 190
+$systemCheckButton.Height = 100
+$systemCheckButton.Location = New-Object System.Drawing.Point(510,50)
+$systemCheckButton.ForeColor = [System.Drawing.Color]::Orange
+$systemCheckButton.Add_Click({
+    $result = [System.Windows.Forms.MessageBox]::Show("Do you want to continue?", "Title", [System.Windows.Forms.MessageBoxButtons]::YesNo)
+    if ($result -eq [System.Windows.Forms.DialogResult]::Yes) {
+        $params = @("/c", "sfc /scannow")
+        $command = "cmd.exe"
+        Start-Process -FilePath $command -ArgumentList $params -Verb RunAs
+        [System.Windows.Forms.MessageBox]::Show("The full system check has started. 
+        It is recommended not to close the command window during the check.")
+    } else { 
+        [System.Windows.Forms.MessageBox]::Show("Got it!")
+        break
+    }
+})
+
+
+#Repair bugs by repairing the Windows image
+
+$repairImageButton = New-Object System.Windows.Forms.Button
+$repairImageButton.Text = "REPAIR BUGS BY REPAIRING THE WINDOWS IMAGE"
+$repairImageButton.Width = 200
+$repairImageButton.Height = 110
+$repairImageButton.Location = New-Object System.Drawing.Point(700,50)
+$repairImageButton.ForeColor = [System.Drawing.Color]::Green
+$repairImageButton.Add_Click({
+     $result = [System.Windows.Forms.MessageBox]::Show("Do you want to continue?", "Title", [System.Windows.Forms.MessageBoxButtons]::YesNo)
+        if ($result -eq [System.Windows.Forms.DialogResult]::Yes) {
+    $params = @("/c", "dism /online /cleanup-image /restorehealth")
+    $command = "cmd.exe"
+    Start-Process -FilePath $command -ArgumentList $params -Verb RunAs
+    [System.Windows.Forms.MessageBox]::Show("The Windows image repair has started.
+     It is recommended not to close the command window during the verification.")
+        } else { [System.Windows.Forms.MessageBox]::Show("Got it!")
+             break
+}
+
+})
+
+
+#Start a quick antivirus scan
+
+$startQuickScanButton = New-Object System.Windows.Forms.Button
+$startQuickScanButton.Text = "START A QUICK ANTIVIRUS SCAN"
+$startQuickScanButton.Width = 150
+$startQuickScanButton.Height = 110
+$startQuickScanButton.Location = New-Object System.Drawing.Point(50,120)
+$startQuickScanButton.ForeColor = [System.Drawing.Color]::Blue
+$startQuickScanButton.Add_Click({
+    $result = [System.Windows.Forms.MessageBox]::Show("DO YOU WANT TO CONTINUE?", "Title", [System.Windows.Forms.MessageBoxButtons]::YesNo)
+        if ($result -eq [System.Windows.Forms.DialogResult]::Yes) {
+    [System.Windows.Forms.MessageBox]::Show("Quick scan started...")
+    [System.Windows.Forms.MessageBox]::Show("Check the scan progress in PowerShell. Press OK.")
+    Start-MpScan -ScanType QuickScan
+    
+        } else { [System.Windows.Forms.MessageBox]::Show("Got it!")
+             break
+}
+
+})
+
+
+#Start an extensive antivirus scan
+
+$fullScanButton = New-Object System.Windows.Forms.Button
+$fullScanButton.Text = "START A FULL ANTIVIRUS SCAN"
+$fullScanButton.Width = 150
+$fullScanButton.Height = 110
+$fullScanButton.Location = New-Object System.Drawing.Point(200,120)
+$fullScanButton.ForeColor = [System.Drawing.Color]::Red
+$fullScanButton.Add_Click({
+    $result = [System.Windows.Forms.MessageBox]::Show("DO YOU WANT TO CONTINUE?", "Title", [System.Windows.Forms.MessageBoxButtons]::YesNo)
+        if ($result -eq [System.Windows.Forms.DialogResult]::Yes) {
+            [System.Windows.Forms.MessageBox]::Show("Full scan started... Check the scan progress in PowerShell. Press Ok.")
+            Start-MpScan -scantype FullScan
+        } else { 
+            [System.Windows.Forms.MessageBox]::Show("Got it!")
+            break
+}
+        
+})
+
+
+#Update Microsoft Store Applications
+
+$updateButton = New-Object System.Windows.Forms.Button
+$updateButton.Text = "LAUNCH MICROSOFT STORE AND UPDATE APPLICATIONS"
+$updateButton.Width = 160
+$updateButton.Height = 110
+$updateButton.Location = New-Object System.Drawing.Point(350,120)
+$updateButton.ForeColor = [System.Drawing.Color]::Indigo
+$updateButton.Add_Click({
+    $userChoice = [System.Windows.Forms.MessageBox]::Show("DO YOU WANT TO CONTINUE?", "Title", [System.Windows.Forms.MessageBoxButtons]::YesNo)
+        if ($userChoice -eq [System.Windows.Forms.DialogResult]::Yes) {
+            Start-Process ms-windows-store:
+            [System.Windows.Forms.MessageBox]::Show("Here you go!")
+        } else { 
+            [System.Windows.Forms.MessageBox]::Show("GOT IT!")
+            break
+        }
+})
+
+
+# Update drivers
+
+$updatedriver = New-Object System.Windows.Forms.Button
+$updatedriver.Text = "UPDATE DRIVERS"
+$updatedriver.Width = 140
+$updatedriver.Height = 110
+$updatedriver.Location = New-Object System.Drawing.Point(510,150)
+$updatedriver.Add_Click({
+    $drivers = Get-WmiObject -Class Win32_PnPSignedDriver
+    foreach ($driver in $drivers) {
+        if($driver.Status -eq "OK") {
+            Update-Driver -Name $driver.DeviceName -Force -Verbose
+        }
+    }
+    [System.Windows.Forms.MessageBox]::Show("SOME DRIVERS UPDATED, FOR OTHERS PLEASE GO TO WINDOWS UPDATE.")
+})
+
+
+# Restart the computer
+
+$restartButton = New-Object System.Windows.Forms.Button
+$restartButton.Text = "RESTART THE COMPUTER"
+$restartButton.Width = 100
+$restartButton.Height = 110
+$restartButton.Location = New-Object System.Drawing.Point(800,400)
+$restartButton.ForeColor = [System.Drawing.Color]::Teal
+$font = New-Object System.Drawing.Font("Bodoni MT",8,[System.Drawing.FontStyle]::Bold)
+$restartButton.Font = $font
+
+$restartButton.Add_Click({
+    $result = [System.Windows.Forms.MessageBox]::Show("Do you want to continue?", "Title", [System.Windows.Forms.MessageBoxButtons]::YesNo)
+        if ($result -eq [System.Windows.Forms.DialogResult]::Yes) {
+        Restart-Computer
+            } else { [System.Windows.Forms.MessageBox]::Show("Alright!")
+             break
+}
+
+})
+
+
+# Test the hard drive
+
+$checkDiskButton = New-Object System.Windows.Forms.Button
+$checkDiskButton.Text = "CHECK THE HARD DRIVE"
+$checkDiskButton.Width = 100
+$checkDiskButton.Height = 110
+$checkDiskButton.Location = New-Object System.Drawing.Point(50,230)
+$checkDiskButton.ForeColor = [System.Drawing.Color]::Olive
+$checkDiskButton.Add_Click({
+    $params = @("/c", "chkdsk /F /V")
+    $command = "cmd.exe"
+    Start-Process -FilePath $command -ArgumentList $params -Verb RunAs
+})
+
+# Delete temporary files
+
+$deleteTempButton = New-Object System.Windows.Forms.Button
+$deleteTempButton.Text = "DELETE TEMPORARY FILES FROM HARD DRIVE"
+$deleteTempButton.Width = 110
+$deleteTempButton.Height = 110
+$deleteTempButton.Location = New-Object System.Drawing.Point(150,230)
+$deleteTempButton.ForeColor = [System.Drawing.Color]::Lime
+$deleteTempButton.Add_Click({
+    $result = [System.Windows.Forms.MessageBox]::Show("Do you want to continue?", "Title", [System.Windows.Forms.MessageBoxButtons]::YesNo)
+    if ($result -eq [System.Windows.Forms.DialogResult]::Yes) {
+        Remove-Item -Path "C:\Windows\Temp\*" -Recurse -Force
+    } else { 
+        [System.Windows.Forms.MessageBox]::Show("Alright!")
+        break
+    }
+})
+      
+
+# Uninstall software from the PC
+
+$uninstallButton = New-Object System.Windows.Forms.Button
+$uninstallButton.Text = "UNINSTALL SOFTWARE FROM PC"
+$uninstallButton.Width = 110
+$uninstallButton.Height = 110
+$uninstallButton.Location = New-Object System.Drawing.Point(260,230)
+$uninstallButton.ForeColor = [System.Drawing.Color]::RoyalBlue 
+$uninstallButton.Add_Click({
+    [System.Windows.Forms.MessageBox]::Show("Please go to the powershell console and type in the software you wish to uninstall. CLICK OK.")
+    $searchTerm = Read-Host "Enter search term for software to uninstall"
+    $software1 = Get-AppxPackage | Where-Object {$_.Name -like "*$searchTerm*"}
+    $software2 = Get-WmiObject -Class Win32_Product | Where-Object {$_.Name -like "*$searchTerm*"}
+    Remove-AppxPackage -Package $software1.PackageFullName
+    Remove-AppxPackage -Package $software2.PackageFullName
+
+    if (!$software1.PackageFullName -and !$software2.PackageFullName) {
+        [System.Windows.Forms.MessageBox]::Show("Software uninstallation failed. I'll open the control panel where you can uninstall the software...")
+        Start-Process control appwiz.cpl
+    }
+})
+
+
+# Repair the registry
+
+$registryRepairButton = New-Object System.Windows.Forms.Button
+$registryRepairButton.Text = "REPAIR AND CLEAN THE REGISTRY"
+$registryRepairButton.Width = 110
+$registryRepairButton.Height = 110
+$registryRepairButton.Location = New-Object System.Drawing.Point(370,230)
+$registryRepairButton.ForeColor = [System.Drawing.Color]::chocolate
+$registryRepairButton.Add_Click({
+    $userDecision = [System.Windows.Forms.MessageBox]::Show("Do you want to continue?", "Title", [System.Windows.Forms.MessageBoxButtons]::YesNo)
+        if ($userDecision -eq [System.Windows.Forms.DialogResult]::Yes) {
+        # Clear empty registry keys
+        Get-ChildItem -Path "HKCU:\" -Recurse | Where-Object { !$_.GetValueNames() } | Remove-ItemProperty -Force
+        # Clear missing shared DLL references
+        $files = Get-ChildItem -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\SharedDLLs"
+        $missingFiles = $files | Where-Object { !(Test-Path $_.PSPath) }
+        $missingFiles | ForEach-Object { Remove-Item -Path $_.PSPath -Force }
+        # Clear unused file extensions
+        $files = Get-ChildItem -Path "C:\" -Recurse
+        $extensions = $files | Group-Object Extension
+        $unusedExtensions = $extensions | Where-Object { $_.Count -eq 0 }
+        $unusedExtensions | ForEach-Object { 
+        Remove-Item -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\FileExts\.$($_.Name)" -Recurse -Force
+        [System.Windows.Forms.MessageBox]::Show("It might not have cleared everything, please use CCleaner to properly clean the registry if that's the case")
+        }
+             } else { [System.Windows.Forms.MessageBox]::Show("Understood!")
+             break
+}
+})
+
+
+
+# Index everything and search for anything on the C: drive
+
+$searchButton = New-Object System.Windows.Forms.Button
+$searchButton.Text = "SEARCH FOR SOMETHING ON THE C: DRIVE"
+$searchButton.Width = 110
+$searchButton.Height = 110
+$searchButton.Location = New-Object System.Drawing.Point(50,340)
+$searchButton.ForeColor = [System.Drawing.Color]::firebrick
+$searchButton.Add_Click({
+[System.Windows.Forms.MessageBox]::Show("This tool will allow you to search for anything on the C: drive - but be warned, this can take quite some time (around 10 minutes for indexing)")
+   # Indexing files on the C: drive
+$indexedFiles = Get-ChildItem C:\ -Recurse -force | Sort-Object LastWriteTime
+
+# Saving the results in a text file
+$indexedFiles | Out-File -FilePath "C:\fileIndex.txt"
+
+# Searching the file index
+$searchInput = $null
+while ($searchInput -eq $null) {
+  $searchInput = Read-Host "Enter the search term"
+  if ($searchInput -eq "") {
+    Write-Host "Please enter a valid search term"
+    $searchInput = $null
+  }
+}
+$searchOutputs = Select-String -Path "C:\fileIndex.txt" -Pattern $searchInput
+
+# Displaying the search results
+$searchOutputs | Select-Object -ExpandProperty Line
+
+})
+
+# START GLARY UTILITIES
+$glaryUtilitiesButton = New-Object System.Windows.Forms.Button
+$glaryUtilitiesButton.Text = "START GLARY UTILITIES"
+$glaryUtilitiesButton.Width = 100
+$glaryUtilitiesButton.Height = 100
+$glaryUtilitiesButton.Location = New-Object System.Drawing.Point(160,340)
+$glaryUtilitiesButton.ForeColor = [System.Drawing.Color]::fire
+$glaryUtilitiesButton.Add_Click({
+    Start-Process -filepath "C:\ProgramData\Microsoft\Windows\Start Menu\Programs\Glary Utilities 5"
+    [System.Windows.Forms.MessageBox]::Show("And there you go!")
+})
+
+
+$form.Controls.Add($button)
+$form.Controls.Add($windowsUpdate)
+$form.Controls.Add($launchButton)
+$form.Controls.Add($systemCheckButton)
+$form.Controls.Add($repairImageButton)
+$form.Controls.Add($startQuickScanButton)
+$form.Controls.Add($fullScanButton)
+$form.Controls.Add($updateButton)
+$form.Controls.Add($updatedriver)
+$form.Controls.Add($restartButton)
+$form.Controls.Add($checkDiskButton)
+$form.Controls.Add($deleteTempButton)
+$form.Controls.Add($uninstallButton)
+$form.Controls.Add($registryRepairButton)
+$form.Controls.Add($searchButton)
+$form.Controls.Add($glaryUtilitiesButton)
+$form.Controls.Add($button17)
+$form.ShowDialog()
