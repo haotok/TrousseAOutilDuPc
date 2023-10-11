@@ -29,6 +29,7 @@ This script assists you in performing various essential tasks and improving your
 Note: Ensure you have the external tools mentioned (CCleaner, Glary Utilities) installed for optimal use.
 
 --------FRANCAIS------------
+
 Trousse à outils PC - PowerShell
 
 Bienvenue sur mon dépôt GitHub où je partage un script PowerShell que j'ai conçu comme une trousse à outils pour votre PC. 
