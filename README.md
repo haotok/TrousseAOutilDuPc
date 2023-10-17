@@ -23,7 +23,7 @@ This script assists you in performing various essential tasks and improving your
 - Registry repair: Like CCleaner, but directly via PowerShell.
 - Indexing and search: Index and find any file on the C: drive.
 - Launch Glary Utilities: Another cleaning and optimization tool (Requires Glary Utilities to be installed).
-- 
+  
 ⚙️ How to use: Run the script in administrator mode. A user interface with different buttons will be presented, each button corresponding to a feature mentioned above.
 
 Note: Ensure you have the external tools mentioned (CCleaner, Glary Utilities) installed for optimal use.
