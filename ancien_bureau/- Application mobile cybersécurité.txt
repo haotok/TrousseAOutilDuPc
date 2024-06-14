@@ -1,0 +1,33 @@
+- Application mobile cybersécurité
+- le scénario serait que la personne incarne un super héros du nom de "super cyber"
+et que elle a diverse missions pour aider les gens ainsi que les entreprises pour sécuriser leurs informatiques.
+
+1: Mon public cible serait des ados, adultes et entreprises.
+2: Scénario: le scénario serait que la personne incarne un super héros du nom de "super cyber"
+et que elle a diverse missions pour aider les gens ainsi que les entreprises pour sécuriser leurs informatiques.
+3: Les missions de cybersécurités serait: le super héros reçoit une notification, une personne à signalé sur le site "cybersignal" lui disant que son ordinateur est victime d'un virus de type ransomware qui a crypté son pc et lui demande une rançon.
+Voici quelques idées de missions pour votre application de jeu liée à la cybersécurité "Super Cyber". Vous pouvez intégrer ces missions dans votre scénario pour créer un jeu engageant et instructif :
+
+    Mission de détection de phishing :
+    Super Cyber reçoit une notification d'une entreprise qui a reçu un e-mail suspect. Le joueur doit examiner l'e-mail, identifier les signes de phishing et prendre les mesures appropriées pour éviter que l'entreprise ne tombe dans le piège.
+
+    Mission de protection des données :
+    Une personne signale que son smartphone a été volé et craint que ses données personnelles ne soient accessibles. Super Cyber doit aider à protéger les données en verrouillant l'appareil à distance, en changeant les mots de passe des comptes en ligne et en conseillant la victime sur les étapes à suivre.
+
+    Mission de prévention des attaques DDoS :
+    Une entreprise est victime d'une attaque DDoS qui perturbe son site web. Super Cyber doit mettre en place des mesures de protection pour atténuer l'attaque, identifier la source et prévenir de futures attaques.
+
+    Mission de sécurisation des réseaux Wi-Fi :
+    Super Cyber est informé qu'un réseau Wi-Fi public est vulnérable aux attaques de pirates. Le joueur doit aider à sécuriser le réseau en changeant les paramètres de sécurité, en mettant en place un VPN et en informant les utilisateurs des risques associés aux réseaux publics.
+
+    Mission d'éducation à la cybersécurité :
+    Une école demande de l'aide pour sensibiliser ses élèves à la cybersécurité. Super Cyber doit préparer et donner une présentation sur les bonnes pratiques en matière de sécurité en ligne, y compris la création de mots de passe forts, la mise à jour régulière des logiciels et la prudence face aux liens et pièces jointes suspects.
+
+    Mission de protection contre les logiciels malveillants :
+    Un utilisateur signale que son ordinateur est infecté par un logiciel malveillant. Super Cyber doit analyser le système, identifier et supprimer le logiciel malveillant, puis donner des conseils pour éviter les futures infections.
+
+    Mission de réponse aux incidents de sécurité :
+    Une entreprise subit une violation de données et demande de l'aide pour gérer la situation. Super Cyber doit aider à identifier la cause de la violation, à limiter les dommages, à notifier les parties concernées et à mettre en place des mesures pour prévenir les futures violations.
+
+    Mission de simulation d'attaque :
+    Une entreprise souhaite tester sa préparation à la cybersécurité et demande à Super Cyber de réaliser une simulation d'attaque (test d'intrusion). Le joueur doit essayer de pénétrer les défenses de l'entreprise, identifier les vulnérabilités et recommander des améliorations.
