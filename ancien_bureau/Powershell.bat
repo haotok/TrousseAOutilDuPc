@@ -1,1 +1,0 @@
-PowerShell_ISE
