@@ -51,6 +51,7 @@ Ce script vous aide à effectuer diverses tâches essentielles et à améliorer 
 - Désinstaller un logiciel : Supprimez facilement les applications inutiles.
 - Réparation du registre : Comme CCleaner, mais directement via PowerShell.
 - Indexation et recherche : Indexez et trouvez n'importe quel fichier sur le disque C:.
+- Afficher informations système : Affiche la quantité de RAM utilisée, la version de windows et le CPU.
 - Lancer Glary Utilities : Un autre outil de nettoyage et d'optimisation (Nécessite d'avoir Glary Utilities installé).
 
 ⚙️ Comment utiliser :
